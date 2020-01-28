@@ -171,7 +171,33 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             // handle delete (by removing the data from your array and updating the tableview)
+           guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            let managedContext =
+                appDelegate.persistentContainer.viewContext
+            
+            let task = tasks[indexPath.row]
+
+            
+            do {
+                 managedContext.delete(task)
+                tasks.remove(at: indexPath.row)
+                //this line to reload the view table
+                //tableView.deleteRows(at: [indexPath], with: .fade)
+                try managedContext.save()
+                //this line do same work reload the view table after save the delet
+                self.tableView.reloadData()
+
+
+            } catch let error as NSError {
+                print("Could not save. \(error)")
+            }
+            
         }
+        
     }
     
 
