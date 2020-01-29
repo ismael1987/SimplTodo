@@ -70,7 +70,7 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         titleTextField = TextField
         titleTextField.placeholder = "Item"
     }
-    
+    //add func when you preess on + the alert will pop
     @IBAction func add(_ sender: UIBarButtonItem) {
         //for the input
         var textFields: UITextField?
@@ -81,11 +81,20 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         let addAction = UIAlertAction(title: "Add", style: .default) { [weak self, weak alert] action in
             //This takes the text in the text field and passes it over to a new method named addNewTask()
             guard let newItem = alert?.textFields?[0].text else { return }
-            self?.addNewTask(newItem)
-            //after success adding new action we reload the table view then the new cell will appear
-            self?.tableView.reloadData()
-
-            print("clicked")
+            if newItem == ""{
+                let alert = UIAlertController(title: "warning", message: "This field was empty !!!!!!!", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+                  print("enter somthing")
+            } else{
+                self?.addNewTask(newItem)
+                //after success adding new action we reload the table view then the new cell will appear
+                self?.tableView.reloadData()
+                
+                print("clicked")
+            }
+            
+           
         }
         
         let CancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
@@ -107,6 +116,7 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         
     }
     
+    //this func will call if u add a new task and clicked add
     func addNewTask(_ newItem: String){
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
