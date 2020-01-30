@@ -58,7 +58,12 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         
         //3- you hand the fetch request over to the managed object context to do the heavy lifting.
         do {
+
+            let sort = NSSortDescriptor(key: "title", ascending: true)
+            fetchRequest.sortDescriptors = [sort]
             tasks = try managedContext.fetch(fetchRequest)
+
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -85,16 +90,13 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
                 let alert = UIAlertController(title: "warning", message: "This field was empty !!!!!!!", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
-                  print("enter somthing")
             } else{
                 self?.addNewTask(newItem)
                 //after success adding new action we reload the table view then the new cell will appear
                 self?.tableView.reloadData()
-                
                 print("clicked")
             }
             
-           
         }
         
         let CancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
