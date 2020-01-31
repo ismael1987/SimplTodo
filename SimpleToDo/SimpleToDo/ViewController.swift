@@ -17,31 +17,10 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //1
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        //2
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Todo")
-        
-        //3
-        do {
-            tasks = try managedContext.fetch(fetchRequest)
-            print(tasks)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }    }
-    
-    
+          }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated) // No need for semicolon
+        super.viewWillAppear(animated)
         
         //1 -Before you can do anything with Core Data, you need a managed object context.
         guard let appDelegate =
@@ -52,7 +31,7 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
-        //2- As the name suggests, NSFetchRequest is the class responsible for fetching from Core Data. Fetch requests are both powerful and flexible.
+        //2- As the name suggests, NSFetchRequest is the class responsible for fetching from Core Data.
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "Todo")
         
@@ -71,10 +50,6 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
     
     var titleTextField: UITextField!
     
-    func titleTextField(TextField: UITextField ){
-        titleTextField = TextField
-        titleTextField.placeholder = "Item"
-    }
     //add func when you preess on + the alert will pop
     @IBAction func add(_ sender: UIBarButtonItem) {
         //for the input
