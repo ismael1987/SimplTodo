@@ -149,10 +149,8 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         
         cell?.textLabel?.text = task.value(forKeyPath: "title") as? String
         
-        return cell!    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return cell!
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
