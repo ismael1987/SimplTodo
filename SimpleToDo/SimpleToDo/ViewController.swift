@@ -17,9 +17,11 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
           }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         //1 -Before you can do anything with Core Data, you need a managed object context.
@@ -38,17 +40,43 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         //3- you hand the fetch request over to the managed object context to do the heavy lifting.
         do {
 
-            let sort = NSSortDescriptor(key: "title", ascending: true)
-            fetchRequest.sortDescriptors = [sort]
             tasks = try managedContext.fetch(fetchRequest)
-
             
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
+    
+    @IBAction func sort(_ sender: UIBarButtonItem?) {
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Todo")
+    
+        
+        let sort = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
+        do {
+            tasks = try! managedContext.fetch(fetchRequest)
+
+            try managedContext.save()
+
+        } catch {
+            print("Cannot fetch tasks")
+        }
+        self.tableView.reloadData()
+       
+    }
+    
     var titleTextField: UITextField!
+    
     
     //add func when you preess on + the alert will pop
     @IBAction func add(_ sender: UIBarButtonItem) {
@@ -127,7 +155,6 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         
     }
   
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
             return tasks.count
@@ -176,7 +203,6 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
                 //this line do same work reload the view table after save the delet
                 self.tableView.reloadData()
 
-
             } catch let error as NSError {
                 print("Could not save. \(error)")
             }
@@ -185,6 +211,5 @@ class ViewController: UIViewController, UITextFieldDelegate,UITableViewDelegate,
         
     }
     
-
 }
 

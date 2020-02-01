@@ -47,6 +47,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="my ToDos" id="kl6-HJ-9te">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="HHO-WB-qcr">
+                            <connections>
+                                <action selector="sort:" destination="BYZ-38-t0r" id="Nd2-QH-Zah"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="kXb-Wi-RAZ">
                             <connections>
                                 <action selector="add:" destination="BYZ-38-t0r" id="mni-0V-XUg"/>
